@@ -1,0 +1,6 @@
+Tests: rapidfuzz-cpp-tests
+Depends: catch2,
+         cmake,
+         g++,
+         librapidfuzz-cpp-dev
+Restrictions: allow-stderr

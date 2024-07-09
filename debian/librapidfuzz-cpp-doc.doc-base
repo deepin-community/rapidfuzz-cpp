@@ -1,0 +1,10 @@
+Document: rapidfuzz-cpp
+Title: RapidFuzz C++ Library Manual
+Author: Max Bachmann <oss@maxbachmann.de>
+Abstract: This manual describes the RapidFuzz C++ library for fuzzy string
+ matching using the Levenshtein and other distances
+Section: Programming/C++
+
+Format: HTML
+Index: /usr/share/doc/librapidfuzz-cpp-dev/html/index.html
+Files: /usr/share/doc/librapidfuzz-cpp-dev/html/*.html

@@ -1,4 +1,35 @@
-#!/usr/bin/make -f
+#! /usr/bin/make -f
+
+DEBIANDIR = $(shell pwd)/debian
 
 %:
 	dh $@
+
+override_dh_auto_configure-indep:
+
+execute_after_dh_auto_build-indep:
+	: # Dummy to force the target to always be run
+ifeq (,$(findstring nodoc,$(DEB_BUILD_OPTIONS)))
+	doxygen
+endif
+
+ifeq (,$(findstring nodoc,$(DEB_BUILD_OPTIONS)))
+override_dh_installdocs:
+	dh_installdocs -plibrapidfuzz-cpp-doc --doc-main-package=librapidfuzz-cpp-dev
+	dh_installdocs --remaining-packages
+endif
+
+override_dh_auto_test-arch:
+	: # Dummy to force the target to alway be run
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
+	mkdir -p buildtest
+	cd buildtest && cmake ../ -D RAPIDFUZZ_BUILD_TESTING=ON
+	cd buildtest && make
+	cd buildtest && make test || \
+	    make test ARGS="--rerun-failed --output-on-failure"
+endif
+
+override_dh_auto_test-indep:
+
+execute_before_dh_auto_clean:
+	rm -rf doxygen buildtest
